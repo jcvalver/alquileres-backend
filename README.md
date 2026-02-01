@@ -88,9 +88,9 @@ Opcionales recomendadas:
 Este repo está configurado para:
 
 - Build: `prisma generate && tsc`
-- Start: `node dist/server.js`
+- Start: `prisma migrate deploy && node dist/server.js`
 
-Las migraciones se ejecutan **por separado** para evitar que el deploy quede en crash-loop si la DB aún no está lista:
+También puedes ejecutar migraciones manualmente si lo necesitas:
 
 - Migrate (manual): `npm run migrate:deploy`
 
@@ -101,7 +101,7 @@ Checklist:
   - Crear una migración “create-only” para dejar registro, o
   - Resolver el estado con `prisma migrate resolve`.
 
-En Railway puedes correr la migración desde:
+En Railway puedes correr la migración manualmente desde:
 - **Service (backend)** → **Run Command** → `npm run migrate:deploy`
 
 ### 6) Verificación post-deploy
