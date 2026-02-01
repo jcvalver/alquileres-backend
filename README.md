@@ -83,6 +83,16 @@ Storage (Supabase public):
 Opcionales recomendadas:
 - `PORT` (Railway lo setea; si no, tu app usa 4000 por defecto)
 
+### Variables de entorno (CORS)
+- `CORS_ORIGIN` (opcional)
+  - Origen permitido para el frontend en producción (ej. Netlify)
+  - Ejemplo: `https://tu-app.netlify.app`
+- `CORS_ORIGINS` (opcional)
+  - Lista separada por comas si tienes múltiples dominios
+  - Ejemplo: `https://tu-app.netlify.app,http://localhost:5173`
+
+> Nota: si no configuras `CORS_ORIGIN(S)`, el backend permite cualquier origen (comportamiento permisivo, útil para desarrollo).
+
 ### 5) Prisma migrations en producción (buena práctica)
 
 Este repo está configurado para:

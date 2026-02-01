@@ -29,7 +29,31 @@ BigInt.prototype.toJSON = function () {
 dotenv.config();
 
 const app = express();
-app.use(cors());
+// CORS
+// - In production, set CORS_ORIGIN (single) or CORS_ORIGINS (comma-separated)
+//   to your frontend URL(s), e.g. https://tu-app.netlify.app
+// - If not set, it falls back to permissive CORS (current behavior).
+const corsOriginsRaw = process.env.CORS_ORIGINS ?? process.env.CORS_ORIGIN;
+const allowedOrigins = corsOriginsRaw
+  ? corsOriginsRaw.split(",").map((s) => s.trim()).filter(Boolean)
+  : null;
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow non-browser requests (curl, server-to-server, Postman)
+      if (!origin) return callback(null, true);
+
+      // Backwards compatible default: allow all if not configured
+      if (!allowedOrigins || allowedOrigins.length === 0) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+
+      return callback(new Error(`CORS blocked origin: ${origin}`));
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Servir archivos subidos (comprobantes)
