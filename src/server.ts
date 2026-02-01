@@ -2,7 +2,7 @@ import app from "./app";
 import dotenv from "dotenv";
 
 dotenv.config();
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT) || 4000;
 
 function logDatabaseTarget(): void {
   const raw = process.env.DATABASE_URL;
@@ -33,6 +33,7 @@ function logDatabaseTarget(): void {
 
 logDatabaseTarget();
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`[startup] Listening on 0.0.0.0:${PORT}`);
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
