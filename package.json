@@ -1,12 +1,12 @@
 {
   "name": "alquileres-backend",
   "version": "0.1.0",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "prisma generate && tsc",
-  "start": "node dist/src/server.js",
+    "start": "node dist/src/server.js",
     "migrate:deploy": "prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
