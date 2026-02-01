@@ -5,6 +5,10 @@ dotenv.config();
 const PORT = Number(process.env.PORT) || 4000;
 
 function logDatabaseTarget(): void {
+  // Solo loguear detalles de la DB cuando se habilite explícitamente.
+  // Útil para debug (Railway), pero evitamos imprimir en producción por defecto.
+  if (process.env.LOG_DB_TARGET !== "true") return;
+
   const raw = process.env.DATABASE_URL;
   if (!raw) {
     console.warn("[startup] DATABASE_URL is missing or empty");
