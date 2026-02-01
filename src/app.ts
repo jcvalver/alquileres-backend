@@ -56,6 +56,21 @@ app.use(
 );
 app.use(express.json());
 
+// Maintenance mode: short-circuit all requests except healthcheck.
+// Enable by setting MAINTENANCE_MODE=true in the environment.
+app.use((req, res, next) => {
+  const maintenance = String(process.env.MAINTENANCE_MODE || "").toLowerCase();
+  if (maintenance !== "true") return next();
+
+  // Keep health endpoint responding for Railway / uptime checks
+  if (req.path === "/api/health") return next();
+
+  return res.status(503).json({
+    error: "maintenance",
+    message: "Servicio en mantenimiento. Intenta más tarde.",
+  });
+});
+
 // Servir archivos subidos (comprobantes)
 if (storageConfig.provider === "local") {
   app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

@@ -93,6 +93,17 @@ Opcionales recomendadas:
 
 > Nota: si no configuras `CORS_ORIGIN(S)`, el backend permite cualquier origen (comportamiento permisivo, útil para desarrollo).
 
+### Modo mantenimiento (opcional)
+
+Si no vas a usar el sistema por un tiempo pero quieres mantener el servicio desplegado, puedes habilitar un modo mantenimiento para reducir carga/uso:
+
+- `MAINTENANCE_MODE=true`
+
+Comportamiento:
+
+- `GET /api/health` sigue respondiendo normal.
+- El resto de rutas responden `503` con JSON `{ error: "maintenance" }`.
+
 ### 5) Prisma migrations en producción (buena práctica)
 
 Este repo está configurado para:
